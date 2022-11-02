@@ -4,6 +4,7 @@
 
 choco install -y 7zip
 choco install -y chocolateygui
+choco install -y choco-cleaner
 choco install -y less
 
 # Development Tools - Languages, Compilers, etc.
@@ -11,7 +12,7 @@ choco install -y less
 choco install -y nvm # this will manage node/npm installs
 choco install -y jq
 choco install -y python3
-choco install -y pip
+# choco install -y pip # can't be installed before the reboot
 choco install -y yarn
 
 # Development Tools - Editors, IDEs
@@ -76,8 +77,8 @@ choco install -y cascadiacodeitalic
 choco install -y cascadiamono
 choco install -y cascadiamonoitalic
 choco install -y croscorefonts-font
-choco install -y croscorefonts-caladea-font
-choco install -y croscorefonts-carlito-font
+choco install -y crosextrafonts-caladea-font
+choco install -y crosextrafonts-carlito-font
 choco install -y dejavufonts
 choco install -y fantasque-sans.font
 choco install -y fira
@@ -99,13 +100,10 @@ choco install -y roboto.font
 choco install -y SourceCodePro
 choco install -y ubuntu.font
 
-Update-SessionEnvironment
-
 # Install Node.JS
 
 nvm install 14.15.0
-
-Update-SessionEnvironment
+nvm use 14.15.0
 
 # Install Angular CLI
 
@@ -115,19 +113,19 @@ npm install -g @angular/cli@6
 
 npm install -g typescript
 
+# Install Powershell Git prompt
+
+Install-Module posh-git
+
 # Install Ubuntu on WSL
 
 $OS_Ver = [System.Environment]::OSVersion.Version
 $Windows_Version = (Get-ComputerInfo | select WindowsVersion).WindowsVersion
 
-if ($Windows_Version -ge 2004) -and ($OS_Ver.Build -ge 19041) {
+if (($Windows_Version -ge 2004) -and ($OS_Ver.Build -ge 19041)) {
     wsl --install -d Ubuntu
 	wsl --set-default Ubuntu
 	Write-Host "Please reboot your machine now."
 } else {
 	Write-Warning "Unable to automatically install Ubuntu on WSL2. Please install manually."
 }
-
-# Install Powershell Git prompt
-
-Install-Module posh-git
