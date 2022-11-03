@@ -2,6 +2,10 @@
 
 choco install -y --stop-on-first-failure packages.config
 
+if (! $?) {
+	return
+}
+
 # Install Node.JS
 
 nvm install 14.15.0
